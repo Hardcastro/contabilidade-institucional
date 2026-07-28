@@ -1,65 +1,135 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Container, ClayButton, ClayTile, GlassCard, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
+import { ArrowRightIcon, BuildingIcon, CalculatorIcon, CompassIcon } from "@/components/base/Icons";
+import {
+  featuredServiceSlugs,
+  finalCta,
+  howItWorks,
+  proofNumbers,
+  services,
+  siteConfig,
+} from "@/site.config";
+
+export const metadata: Metadata = {
+  title: siteConfig.tagline,
+  description: siteConfig.description,
+};
+
+const featuredIcons: Record<string, typeof BuildingIcon> = {
+  "abertura-de-empresa": BuildingIcon,
+  "contabilidade-mensal": CalculatorIcon,
+  "consultoria-tributaria": CompassIcon,
+};
 
 export default function Home() {
+  const featuredServices = featuredServiceSlugs
+    .map((slug) => services.find((service) => service.slug === slug))
+    .filter((service): service is NonNullable<typeof service> => Boolean(service));
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Section className="pb-8 pt-14 sm:pt-20">
+        <Container>
+          <div className="flex max-w-3xl flex-col gap-6">
+            <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
+              Contabilidade em {siteConfig.city}
+            </span>
+            <h1 className="text-h2 sm:text-h1 font-medium text-text-primary text-balance">
+              {siteConfig.tagline}
+            </h1>
+            <p className="max-w-xl text-lead text-text-muted">{siteConfig.description}</p>
+            <div className="mt-2 flex flex-wrap gap-4">
+              <ClayButton href="/contato">
+                Falar com a Meridiano
+                <ArrowRightIcon className="h-4 w-4" />
+              </ClayButton>
+              <ClayButton href="/planos" variant="surface">
+                Ver planos e preços
+              </ClayButton>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="O que você recebe"
+            title="Três frentes que tiram o imposto da sua cabeça"
+            description="Detalhes de todos os serviços ficam na página de serviços — aqui, o resumo do que muda no seu dia a dia."
+          />
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {featuredServices.map((service) => {
+              const Icon = featuredIcons[service.slug] ?? BuildingIcon;
+              return (
+                <SolidCard key={service.slug} className="flex flex-col gap-4 p-6">
+                  <ClayTile className="h-12 w-12">
+                    <Icon className="h-6 w-6" />
+                  </ClayTile>
+                  <h3 className="text-lead font-medium text-text-primary">{service.title}</h3>
+                  <p className="text-body-sm text-text-muted">{service.summary}</p>
+                  <Link
+                    href="/servicos"
+                    className="mt-auto inline-flex items-center gap-1 text-body-sm font-medium text-text-secondary hover:text-text-primary"
+                  >
+                    Ver detalhes
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </Link>
+                </SolidCard>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SectionHeading eyebrow="Como funciona" title="Do primeiro contato à rotina no calendário" />
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {howItWorks.map((step, index) => (
+              <div key={step.title} className="flex flex-col gap-3">
+                <ClayTile className="h-10 w-10 text-body font-medium">{index + 1}</ClayTile>
+                <h3 className="text-lead font-medium text-text-primary">{step.title}</h3>
+                <p className="text-body-sm text-text-muted">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <GlassCard className="p-8 sm:p-10">
+            <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
+              Números do escritório
+            </span>
+            <div className="mt-6 grid gap-8 sm:grid-cols-4">
+              {proofNumbers.map((item) => (
+                <div key={item.label} className="flex flex-col gap-1">
+                  <span className="text-h3 font-semibold text-text-primary">{item.value}</span>
+                  <span className="text-body-sm text-text-muted">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </GlassCard>
+        </Container>
+      </Section>
+
+      <Section className="pb-24">
+        <Container>
+          <SolidCard className="flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
+            <div className="flex flex-col gap-2">
+              <h2 className="text-h3 font-medium text-text-primary">{finalCta.title}</h2>
+              <p className="max-w-xl text-body text-text-muted">{finalCta.description}</p>
+            </div>
+            <ClayButton href={finalCta.buttonHref} className="shrink-0">
+              {finalCta.buttonLabel}
+              <ArrowRightIcon className="h-4 w-4" />
+            </ClayButton>
+          </SolidCard>
+        </Container>
+      </Section>
+    </>
   );
 }

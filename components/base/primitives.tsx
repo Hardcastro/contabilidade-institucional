@@ -121,10 +121,7 @@ const clayVariants = {
 const clayButtonClasses = (variant: "primary" | "surface", className: string) =>
   `inline-flex items-center justify-center gap-2 rounded-control px-6 py-3 text-body font-medium shadow-clay outline-none transition-shadow duration-150 active:shadow-clay-active disabled:cursor-not-allowed disabled:opacity-60 ${clayVariants[variant]} ${className}`;
 
-type ClayButtonAsButton = ClayButtonBaseProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & {
-    href?: undefined;
-  };
+type ClayButtonAsButton = ClayButtonBaseProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 type ClayButtonAsLink = ClayButtonBaseProps & {
   href: string;
@@ -141,7 +138,9 @@ export function ClayButton(props: ClayButtonAsButton | ClayButtonAsLink) {
     );
   }
 
-  const { href: _href, ...buttonProps } = props as ClayButtonAsButton;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- stripping styling props before spreading onto the DOM button
+  const { children: _children, variant: _variant, className: _className, ...buttonProps } =
+    props as ClayButtonAsButton;
   return (
     <button className={clayButtonClasses(variant, className)} {...buttonProps}>
       {children}
