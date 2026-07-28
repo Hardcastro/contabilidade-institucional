@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
 import { ClayButton, Container, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
 import { CheckIcon } from "@/components/base/Icons";
+import { pageMetadata } from "@/lib/seo";
 import { comparisonRows, plans, siteConfig } from "@/site.config";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Planos",
   description: `Planos e preços da ${siteConfig.name}: contabilidade para MEI, ME no Simples Nacional e empresas no Lucro Presumido.`,
-};
+});
 
 export default function PlanosPage() {
   return (

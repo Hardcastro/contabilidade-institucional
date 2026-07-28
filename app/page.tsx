@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, ClayButton, ClayTile, GlassCard, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
 import { ArrowRightIcon, BuildingIcon, CalculatorIcon, CompassIcon } from "@/components/base/Icons";
+import { pageMetadata } from "@/lib/seo";
 import {
   featuredServiceSlugs,
   finalCta,
@@ -11,10 +11,10 @@ import {
   siteConfig,
 } from "@/site.config";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: siteConfig.tagline,
   description: siteConfig.description,
-};
+});
 
 const featuredIcons: Record<string, typeof BuildingIcon> = {
   "abertura-de-empresa": BuildingIcon,

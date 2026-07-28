@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Container, ClayTile, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
 import {
   BuildingIcon,
@@ -7,12 +6,13 @@ import {
   FileTextIcon,
   UsersIcon,
 } from "@/components/base/Icons";
+import { pageMetadata } from "@/lib/seo";
 import { services, siteConfig } from "@/site.config";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Serviços",
   description: `Os serviços contábeis da ${siteConfig.name}: abertura de empresa, contabilidade mensal, folha de pagamento, imposto de renda e consultoria tributária.`,
-};
+});
 
 const serviceIcons: Record<string, typeof BuildingIcon> = {
   "abertura-de-empresa": BuildingIcon,

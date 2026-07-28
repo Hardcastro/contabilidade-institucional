@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
 import { ContactForm } from "@/components/base/ContactForm";
 import { Container, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
 import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from "@/components/base/Icons";
+import { pageMetadata } from "@/lib/seo";
 import { businessTypeOptions, revenueRangeOptions, siteConfig } from "@/site.config";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Contato",
   description: `Fale com a ${siteConfig.name}: telefone, e-mail, endereço e formulário de contato.`,
-};
+});
 
 export default function ContatoPage() {
   return (

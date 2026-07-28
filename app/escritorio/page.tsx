@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
 import { Container, ClayTile, GlassCard, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
+import { pageMetadata } from "@/lib/seo";
 import { officeHistory, proofNumbers, siteConfig, team } from "@/site.config";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Escritório",
   description: `Conheça a equipe e a história da ${siteConfig.name}, escritório de contabilidade em ${siteConfig.city}.`,
-};
+});
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
