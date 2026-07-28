@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
+/*
+  Clay + glass, grafite and emerald — the shared visual signature.
+  Raw tokens live here as CSS custom properties; @theme below exposes
+  the subset that needs to become Tailwind utilities (colors, radius,
+  shadow, blur, type scale). The background gradient and clay shadow
+  recipes are consumed directly via var() since they don't fit
+  Tailwind's flat color/shadow shape.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background */
+  --bg-gradient: linear-gradient(140deg, #0f172a 0%, #134e4a 58%, #065f46 100%);
+  --bg-deep: #0f172a;
+  --bg-mid: #134e4a;
+  --bg-emerald: #065f46;
+  --bg-solid: #0b1620;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 16px;
+
+  /* Glass, near-solid — for anything carrying running text */
+  --glass-solid-bg: rgba(15, 23, 42, 0.72);
+  --glass-solid-border: rgba(255, 255, 255, 0.14);
+
+  /* Clay */
+  --clay-primary: #10b981;
+  --clay-primary-ink: #022c22;
+  --clay-surface: #134e4a;
+  --clay-surface-ink: #6ee7b7;
+
+  --clay-shadow: inset -3px -3px 7px rgba(0, 0, 0, 0.45),
+    inset 3px 3px 8px rgba(255, 255, 255, 0.14), 6px 7px 18px rgba(0, 0, 0, 0.45);
+  --clay-shadow-active: inset 3px 3px 7px rgba(0, 0, 0, 0.45),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.1), 2px 3px 8px rgba(0, 0, 0, 0.4);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a7f3d0;
+  --text-muted: #94a3b8;
+
+  /* Radius */
+  --radius-control: 14px;
+  --radius-card: 20px;
+  --radius-panel: 28px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+
+  --color-bg-deep: var(--bg-deep);
+  --color-bg-mid: var(--bg-mid);
+  --color-bg-emerald: var(--bg-emerald);
+  --color-bg-solid: var(--bg-solid);
+
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --color-glass-solid-bg: var(--glass-solid-bg);
+  --color-glass-solid-border: var(--glass-solid-border);
+
+  --color-clay-primary: var(--clay-primary);
+  --color-clay-primary-ink: var(--clay-primary-ink);
+  --color-clay-surface: var(--clay-surface);
+  --color-clay-surface-ink: var(--clay-surface-ink);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --radius-control: var(--radius-control);
+  --radius-card: var(--radius-card);
+  --radius-panel: var(--radius-panel);
+
+  --shadow-clay: var(--clay-shadow);
+  --shadow-clay-active: var(--clay-shadow-active);
+
+  --blur-glass: var(--glass-blur);
+
+  /* Type scale: 14 / 16 / 20 / 28 / 40 / 56 */
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.5;
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 1.25;
+  --text-h2: 2.5rem;
+  --text-h2--line-height: 1.15;
+  --text-h1: 3.5rem;
+  --text-h1--line-height: 1.05;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+}
+
+/* Visible focus ring on every focusable element — never outline: none alone. */
+:focus-visible {
+  outline: 2px solid var(--clay-primary);
+  outline-offset: 2px;
 }
