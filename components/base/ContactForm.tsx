@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { ChangeEvent, FocusEvent, FormEvent, ReactNode } from "react";
+import type { ChangeEvent, FormEvent, ReactNode } from "react";
 import {
   CONTACT_FIELDS,
   formatPhoneNumber,
@@ -100,7 +100,7 @@ export function ContactForm({
   }
 
   function handleBlur(field: ContactFormField) {
-    return (_event: FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    return () => {
       const error = validateField(field, values);
       setErrors((prev) => ({ ...prev, [field]: error }));
     };
@@ -167,7 +167,7 @@ export function ContactForm({
           tabIndex={-1}
           autoComplete="off"
           value={values.company}
-          onChange={handleChange("company")}
+          onChange={(event) => setValues((prev) => ({ ...prev, company: event.target.value }))}
         />
       </div>
 
