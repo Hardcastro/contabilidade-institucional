@@ -94,6 +94,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /*
+    Kill animation and easing, not static transforms — a permanently
+    offset element (e.g. the featured plan card) is layout, not motion,
+    and should still render offset for reduced-motion users.
+  */
   *,
   *::before,
   *::after {
@@ -101,7 +106,6 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-    transform: none !important;
   }
 }
 
@@ -115,4 +119,42 @@ body {
 :focus-visible {
   outline: 2px solid var(--clay-primary);
   outline-offset: 2px;
+}
+
+/*
+  Soft decorative light behind hero/CTA moments. Plain CSS blur (not
+  backdrop-filter), so it never counts against the glass budget, and it
+  never sits between the viewer and readable content — z-index keeps it
+  behind everything, aria-hidden keeps it out of the accessibility tree.
+*/
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-glow::before,
+.ambient-glow::after {
+  content: "";
+  position: absolute;
+  width: 42rem;
+  height: 42rem;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.28;
+}
+
+.ambient-glow::before {
+  top: -14rem;
+  right: -10rem;
+  background: var(--clay-primary);
+}
+
+.ambient-glow::after {
+  bottom: -18rem;
+  left: -12rem;
+  background: var(--bg-mid);
+  opacity: 0.35;
 }

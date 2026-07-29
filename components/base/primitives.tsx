@@ -58,7 +58,9 @@ export function SectionHeading({
           {eyebrow}
         </span>
       ) : null}
-      <h2 className="text-h3 sm:text-h2 font-medium text-text-primary text-balance">{title}</h2>
+      <h2 className="text-h3 sm:text-h2 font-medium tracking-tight text-text-primary text-balance">
+        {title}
+      </h2>
       {description ? (
         <p className="max-w-2xl text-body text-text-muted">{description}</p>
       ) : null}
@@ -80,7 +82,7 @@ type GlassCardProps = {
 export function GlassCard({ children, className = "", as: As = "div" }: GlassCardProps) {
   return (
     <As
-      className={`rounded-panel border border-glass-border bg-glass-bg backdrop-blur-glass ${className}`}
+      className={`rounded-panel border border-glass-border bg-glass-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-glass ${className}`}
     >
       {children}
     </As>
@@ -89,22 +91,39 @@ export function GlassCard({ children, className = "", as: As = "div" }: GlassCar
 
 /**
  * Solid (or near-solid) surface for anything with more than one line of
- * text: paragraphs, forms, tables.
+ * text: paragraphs, forms, tables. Set `interactive` on cards that are
+ * themselves a link/button target — it adds a hover lift and border glow,
+ * never on cards that merely contain one.
  */
 type SolidCardProps = {
   children: ReactNode;
   className?: string;
   as?: ElementType;
+  interactive?: boolean;
+  href?: string;
 };
 
-export function SolidCard({ children, className = "", as: As = "div" }: SolidCardProps) {
-  return (
-    <As
-      className={`rounded-card border border-glass-solid-border bg-glass-solid-bg ${className}`}
-    >
-      {children}
-    </As>
-  );
+export function SolidCard({
+  children,
+  className = "",
+  as: As = "div",
+  interactive = false,
+  href,
+}: SolidCardProps) {
+  const interactiveClasses = interactive
+    ? "transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-clay-primary/50 hover:shadow-[0_16px_40px_-20px_rgba(16,185,129,0.45)] focus-visible:-translate-y-1"
+    : "";
+  const combinedClassName = `rounded-card border border-glass-solid-border bg-glass-solid-bg ${interactiveClasses} ${className}`;
+
+  if (href) {
+    return (
+      <Link href={href} className={`block ${combinedClassName}`}>
+        {children}
+      </Link>
+    );
+  }
+
+  return <As className={combinedClassName}>{children}</As>;
 }
 
 type ClayButtonBaseProps = {
@@ -119,7 +138,7 @@ const clayVariants = {
 };
 
 const clayButtonClasses = (variant: "primary" | "surface", className: string) =>
-  `inline-flex items-center justify-center gap-2 rounded-control px-6 py-3 text-body font-medium shadow-clay outline-none transition-shadow duration-150 active:shadow-clay-active disabled:cursor-not-allowed disabled:opacity-60 ${clayVariants[variant]} ${className}`;
+  `inline-flex items-center justify-center gap-2 rounded-control px-6 py-3 text-body font-medium shadow-clay outline-none transition-[filter,box-shadow,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:shadow-clay-active active:brightness-95 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:brightness-100 ${clayVariants[variant]} ${className}`;
 
 type ClayButtonAsButton = ClayButtonBaseProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -156,7 +175,7 @@ type ClayTileProps = {
 export function ClayTile({ children, className = "" }: ClayTileProps) {
   return (
     <div
-      className={`flex items-center justify-center rounded-card bg-clay-surface text-clay-surface-ink shadow-clay ${className}`}
+      className={`flex items-center justify-center rounded-card bg-clay-surface text-clay-surface-ink shadow-clay ring-1 ring-inset ring-white/10 ${className}`}
     >
       {children}
     </div>

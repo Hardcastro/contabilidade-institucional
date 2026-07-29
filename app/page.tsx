@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Container, ClayButton, ClayTile, GlassCard, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
 import { ArrowRightIcon, BuildingIcon, CalculatorIcon, CompassIcon } from "@/components/base/Icons";
 import { pageMetadata } from "@/lib/seo";
@@ -29,13 +28,14 @@ export default function Home() {
 
   return (
     <>
-      <Section className="pb-8 pt-14 sm:pt-20">
+      <Section className="relative pb-8 pt-14 sm:pt-20">
+        <div className="ambient-glow" aria-hidden="true" />
         <Container>
           <div className="flex max-w-3xl flex-col gap-6">
             <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
               Contabilidade em {siteConfig.city}
             </span>
-            <h1 className="text-h2 sm:text-h1 font-medium text-text-primary text-balance">
+            <h1 className="text-h2 sm:text-h1 font-medium tracking-tight text-text-primary text-balance">
               {siteConfig.tagline}
             </h1>
             <p className="max-w-xl text-lead text-text-muted">{siteConfig.description}</p>
@@ -63,19 +63,16 @@ export default function Home() {
             {featuredServices.map((service) => {
               const Icon = featuredIcons[service.slug] ?? BuildingIcon;
               return (
-                <SolidCard key={service.slug} className="flex flex-col gap-4 p-6">
+                <SolidCard key={service.slug} href="/servicos" interactive className="flex flex-col gap-4 p-6">
                   <ClayTile className="h-12 w-12">
                     <Icon className="h-6 w-6" />
                   </ClayTile>
                   <h3 className="text-lead font-medium text-text-primary">{service.title}</h3>
                   <p className="text-body-sm text-text-muted">{service.summary}</p>
-                  <Link
-                    href="/servicos"
-                    className="mt-auto inline-flex items-center gap-1 text-body-sm font-medium text-text-secondary hover:text-text-primary"
-                  >
+                  <span className="mt-auto inline-flex items-center gap-1 text-body-sm font-medium text-text-secondary">
                     Ver detalhes
                     <ArrowRightIcon className="h-4 w-4" />
-                  </Link>
+                  </span>
                 </SolidCard>
               );
             })}
@@ -105,9 +102,14 @@ export default function Home() {
               Números do escritório
             </span>
             <div className="mt-6 grid gap-8 sm:grid-cols-4">
-              {proofNumbers.map((item) => (
-                <div key={item.label} className="flex flex-col gap-1">
-                  <span className="text-h3 font-semibold text-text-primary">{item.value}</span>
+              {proofNumbers.map((item, index) => (
+                <div
+                  key={item.label}
+                  className={`flex flex-col gap-1 ${
+                    index > 0 ? "sm:border-l sm:border-glass-border sm:pl-8" : ""
+                  }`}
+                >
+                  <span className="text-h3 font-semibold tracking-tight text-text-primary">{item.value}</span>
                   <span className="text-body-sm text-text-muted">{item.label}</span>
                 </div>
               ))}
@@ -120,7 +122,7 @@ export default function Home() {
         <Container>
           <SolidCard className="flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div className="flex flex-col gap-2">
-              <h2 className="text-h3 font-medium text-text-primary">{finalCta.title}</h2>
+              <h2 className="text-h3 font-medium tracking-tight text-text-primary">{finalCta.title}</h2>
               <p className="max-w-xl text-body text-text-muted">{finalCta.description}</p>
             </div>
             <ClayButton href={finalCta.buttonHref} className="shrink-0">

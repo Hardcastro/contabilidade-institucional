@@ -15,16 +15,30 @@ type HeaderProps = {
 export function Header({ brand, navItems }: HeaderProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 pt-4">
       <Container>
-        <GlassCard as="nav" aria-label="Principal" className="flex items-center justify-between px-5 py-3 sm:px-6">
-          <Link href="/" className="text-body font-medium text-text-primary">
+        <GlassCard
+          as="nav"
+          aria-label="Principal"
+          className={`flex items-center justify-between px-5 py-3 transition-shadow duration-300 sm:px-6 ${
+            scrolled ? "shadow-[0_12px_32px_-16px_rgba(0,0,0,0.55)]" : ""
+          }`}
+        >
+          <Link href="/" className="text-body font-medium tracking-tight text-text-primary">
             {brand}
           </Link>
 

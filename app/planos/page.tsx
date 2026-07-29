@@ -28,8 +28,10 @@ export default function PlanosPage() {
             {plans.map((plan) => (
               <SolidCard
                 key={plan.id}
-                className={`flex flex-col gap-6 p-6 sm:p-8 ${
-                  plan.featured ? "ring-2 ring-clay-primary" : ""
+                className={`relative flex flex-col gap-6 p-6 sm:p-8 ${
+                  plan.featured
+                    ? "z-10 ring-2 ring-clay-primary shadow-[0_24px_60px_-24px_rgba(16,185,129,0.5)] lg:-translate-y-3"
+                    : ""
                 }`}
               >
                 <div className="flex flex-col gap-2">
@@ -39,7 +41,7 @@ export default function PlanosPage() {
                     </span>
                   ) : null}
                   <h2 className="text-lead font-medium text-text-primary">{plan.name}</h2>
-                  <p className="text-h3 font-semibold text-text-primary">{plan.price}</p>
+                  <p className="text-h3 font-semibold tracking-tight text-text-primary">{plan.price}</p>
                   <p className="text-body-sm text-text-muted">{plan.audience}</p>
                 </div>
 

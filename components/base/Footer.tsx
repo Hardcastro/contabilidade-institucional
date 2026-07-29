@@ -22,10 +22,10 @@ export function Footer({ brand, description, contact, navItems }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 border-t border-glass-solid-border bg-bg-solid">
+    <footer className="mt-16 border-t-2 border-transparent bg-bg-solid [border-image:linear-gradient(90deg,transparent,rgba(16,185,129,0.45),transparent)_1]">
       <Container className="grid gap-10 py-14 sm:grid-cols-3">
         <div className="flex flex-col gap-3">
-          <span className="text-body font-medium text-text-primary">{brand}</span>
+          <span className="text-body font-medium tracking-tight text-text-primary">{brand}</span>
           <p className="text-body-sm text-text-muted">{description}</p>
         </div>
 
