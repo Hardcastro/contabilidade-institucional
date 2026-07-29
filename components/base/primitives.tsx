@@ -101,6 +101,9 @@ type SolidCardProps = {
   as?: ElementType;
   interactive?: boolean;
   href?: string;
+  [key: `aria-${string}`]: string | boolean | undefined;
+  id?: string;
+  role?: string;
 };
 
 export function SolidCard({
@@ -109,6 +112,7 @@ export function SolidCard({
   as: As = "div",
   interactive = false,
   href,
+  ...rest
 }: SolidCardProps) {
   const interactiveClasses = interactive
     ? "transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-clay-primary/50 hover:shadow-[0_16px_40px_-20px_rgba(16,185,129,0.45)] focus-visible:-translate-y-1"
@@ -117,13 +121,17 @@ export function SolidCard({
 
   if (href) {
     return (
-      <Link href={href} className={`block ${combinedClassName}`}>
+      <Link href={href} className={`block ${combinedClassName}`} {...rest}>
         {children}
       </Link>
     );
   }
 
-  return <As className={combinedClassName}>{children}</As>;
+  return (
+    <As className={combinedClassName} {...rest}>
+      {children}
+    </As>
+  );
 }
 
 type ClayButtonBaseProps = {

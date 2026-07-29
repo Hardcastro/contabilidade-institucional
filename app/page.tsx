@@ -1,30 +1,42 @@
-import { Container, ClayButton, ClayTile, GlassCard, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
-import { ArrowRightIcon, BuildingIcon, CalculatorIcon, CompassIcon } from "@/components/base/Icons";
-import { pageMetadata } from "@/lib/seo";
+import Link from "next/link";
+import { Container, ClayButton, ClayTile, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
+import { ServiceExplorer } from "@/components/base/ServiceExplorer";
 import {
-  featuredServiceSlugs,
-  finalCta,
-  howItWorks,
-  proofNumbers,
-  services,
-  siteConfig,
-} from "@/site.config";
+  ArrowRightIcon,
+  BuildingIcon,
+  CalculatorIcon,
+  CompassIcon,
+  FileTextIcon,
+  UsersIcon,
+} from "@/components/base/Icons";
+import { pageMetadata } from "@/lib/seo";
+import { finalCta, howItWorks, officeHistory, proofNumbers, services, siteConfig } from "@/site.config";
 
 export const metadata = pageMetadata({
   title: siteConfig.tagline,
   description: siteConfig.description,
 });
 
-const featuredIcons: Record<string, typeof BuildingIcon> = {
+const serviceIcons: Record<string, typeof BuildingIcon> = {
   "abertura-de-empresa": BuildingIcon,
   "contabilidade-mensal": CalculatorIcon,
+  "folha-de-pagamento": UsersIcon,
+  "imposto-de-renda-pj-e-pf": FileTextIcon,
   "consultoria-tributaria": CompassIcon,
 };
 
+const heroStat = proofNumbers[1];
+
 export default function Home() {
-  const featuredServices = featuredServiceSlugs
-    .map((slug) => services.find((service) => service.slug === slug))
-    .filter((service): service is NonNullable<typeof service> => Boolean(service));
+  const explorerServices = services.map((service) => {
+    const Icon = serviceIcons[service.slug] ?? BuildingIcon;
+    return {
+      slug: service.slug,
+      title: service.title,
+      description: service.description,
+      icon: <Icon className="h-7 w-7" />,
+    };
+  });
 
   return (
     <>
@@ -39,7 +51,7 @@ export default function Home() {
               {siteConfig.tagline}
             </h1>
             <p className="max-w-xl text-lead text-text-muted">{siteConfig.description}</p>
-            <div className="mt-2 flex flex-wrap gap-4">
+            <div className="mt-2 flex flex-wrap items-center gap-4">
               <ClayButton href="/contato">
                 Falar com a Meridiano
                 <ArrowRightIcon className="h-4 w-4" />
@@ -48,6 +60,12 @@ export default function Home() {
                 Ver planos e preços
               </ClayButton>
             </div>
+            {heroStat ? (
+              <p className="text-body-sm text-text-muted">
+                <span className="font-semibold tracking-tight text-text-primary">{heroStat.value}</span>{" "}
+                {heroStat.label} já confiam na Meridiano.
+              </p>
+            ) : null}
           </div>
         </Container>
       </Section>
@@ -56,27 +74,19 @@ export default function Home() {
         <Container>
           <SectionHeading
             eyebrow="O que você recebe"
-            title="Três frentes que tiram o imposto da sua cabeça"
-            description="Detalhes de todos os serviços ficam na página de serviços — aqui, o resumo do que muda no seu dia a dia."
+            title="Escolha o que pesa mais na sua rotina"
+            description="Toque em cada serviço para ver o que muda no seu dia a dia — os detalhes completos ficam na página de serviços."
           />
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {featuredServices.map((service) => {
-              const Icon = featuredIcons[service.slug] ?? BuildingIcon;
-              return (
-                <SolidCard key={service.slug} href="/servicos" interactive className="flex flex-col gap-4 p-6">
-                  <ClayTile className="h-12 w-12">
-                    <Icon className="h-6 w-6" />
-                  </ClayTile>
-                  <h3 className="text-lead font-medium text-text-primary">{service.title}</h3>
-                  <p className="text-body-sm text-text-muted">{service.summary}</p>
-                  <span className="mt-auto inline-flex items-center gap-1 text-body-sm font-medium text-text-secondary">
-                    Ver detalhes
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </span>
-                </SolidCard>
-              );
-            })}
+          <div className="mt-10">
+            <ServiceExplorer services={explorerServices} />
           </div>
+          <Link
+            href="/servicos"
+            className="mt-6 inline-flex items-center gap-1 text-body-sm font-medium text-text-secondary hover:text-text-primary"
+          >
+            Ver todos os serviços
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
         </Container>
       </Section>
 
@@ -95,28 +105,46 @@ export default function Home() {
         </Container>
       </Section>
 
-      <Section>
+      <Section className="pt-0">
         <Container>
-          <GlassCard className="p-8 sm:p-10">
-            <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
-              Números do escritório
-            </span>
-            <div className="mt-6 grid gap-8 sm:grid-cols-4">
-              {proofNumbers.map((item, index) => (
-                <div
-                  key={item.label}
-                  className={`flex flex-col gap-1 ${
-                    index > 0 ? "sm:border-l sm:border-glass-border sm:pl-8" : ""
-                  }`}
-                >
-                  <span className="text-h3 font-semibold tracking-tight text-text-primary">{item.value}</span>
-                  <span className="text-body-sm text-text-muted">{item.label}</span>
-                </div>
-              ))}
+          <SolidCard className="flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
+            <div className="flex flex-col gap-2">
+              <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
+                Quem somos
+              </span>
+              <p className="max-w-2xl text-body text-text-muted">{officeHistory}</p>
             </div>
-          </GlassCard>
+            <Link
+              href="/escritorio"
+              className="inline-flex shrink-0 items-center gap-1 text-body-sm font-medium text-text-secondary hover:text-text-primary"
+            >
+              Conheça a equipe
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </SolidCard>
         </Container>
       </Section>
+
+      <section className="bg-clay-primary py-14 sm:py-16">
+        <Container>
+          <span className="text-body-sm font-semibold uppercase tracking-wide text-clay-primary-ink">
+            Números do escritório
+          </span>
+          <div className="mt-6 grid gap-8 sm:grid-cols-4">
+            {proofNumbers.map((item, index) => (
+              <div
+                key={item.label}
+                className={`flex flex-col gap-1 ${
+                  index > 0 ? "sm:border-l sm:border-clay-primary-ink/20 sm:pl-8" : ""
+                }`}
+              >
+                <span className="text-h3 font-semibold tracking-tight text-clay-primary-ink">{item.value}</span>
+                <span className="text-body-sm font-medium text-clay-primary-ink">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
 
       <Section className="pb-24">
         <Container>

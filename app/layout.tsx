@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/base/Header";
 import { Footer } from "@/components/base/Footer";
+import { UtilityBar } from "@/components/base/UtilityBar";
 import { navItems, siteConfig } from "@/site.config";
 import "./globals.css";
 
@@ -47,6 +48,11 @@ export default function RootLayout({
         >
           Pular para o conteúdo
         </a>
+        <UtilityBar
+          phone={siteConfig.contact.phone}
+          phoneHref={siteConfig.contact.phoneHref}
+          hours={siteConfig.contact.hours}
+        />
         <Header brand={siteConfig.shortName} navItems={navItems} />
         <main id="conteudo" className="flex-1">
           {children}

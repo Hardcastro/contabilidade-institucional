@@ -1,4 +1,4 @@
-import { Container, ClayTile, GlassCard, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
+import { Container, ClayTile, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
 import { pageMetadata } from "@/lib/seo";
 import { officeHistory, proofNumbers, siteConfig, team } from "@/site.config";
 
@@ -48,23 +48,26 @@ export default function EscritorioPage() {
         </Container>
       </Section>
 
-      <Section className="pb-24">
+      <section className="bg-clay-primary py-14 sm:py-16">
         <Container>
-          <GlassCard className="p-8 sm:p-10">
-            <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
-              Números do escritório
-            </span>
-            <div className="mt-6 grid gap-8 sm:grid-cols-4">
-              {proofNumbers.map((item) => (
-                <div key={item.label} className="flex flex-col gap-1">
-                  <span className="text-h3 font-semibold text-text-primary">{item.value}</span>
-                  <span className="text-body-sm text-text-muted">{item.label}</span>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
+          <span className="text-body-sm font-semibold uppercase tracking-wide text-clay-primary-ink">
+            Números do escritório
+          </span>
+          <div className="mt-6 grid gap-8 sm:grid-cols-4">
+            {proofNumbers.map((item, index) => (
+              <div
+                key={item.label}
+                className={`flex flex-col gap-1 ${
+                  index > 0 ? "sm:border-l sm:border-clay-primary-ink/20 sm:pl-8" : ""
+                }`}
+              >
+                <span className="text-h3 font-semibold tracking-tight text-clay-primary-ink">{item.value}</span>
+                <span className="text-body-sm font-medium text-clay-primary-ink">{item.label}</span>
+              </div>
+            ))}
+          </div>
         </Container>
-      </Section>
+      </section>
     </>
   );
 }
