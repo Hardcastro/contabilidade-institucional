@@ -1,16 +1,25 @@
 import Link from "next/link";
-import { Container, ClayButton, ClayTile, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
+import { Container, ClayButton, ClayTile, GlassCard, SectionHeading, Section, SolidCard } from "@/components/base/primitives";
 import { ServiceExplorer } from "@/components/base/ServiceExplorer";
 import {
   ArrowRightIcon,
   BuildingIcon,
   CalculatorIcon,
+  CheckIcon,
   CompassIcon,
   FileTextIcon,
   UsersIcon,
 } from "@/components/base/Icons";
 import { pageMetadata } from "@/lib/seo";
-import { finalCta, howItWorks, officeHistory, proofNumbers, services, siteConfig } from "@/site.config";
+import {
+  finalCta,
+  howItWorks,
+  officeHistory,
+  proofNumbers,
+  services,
+  siteConfig,
+  whyChooseUs,
+} from "@/site.config";
 
 export const metadata = pageMetadata({
   title: siteConfig.tagline,
@@ -43,29 +52,45 @@ export default function Home() {
       <Section className="relative pb-8 pt-14 sm:pt-20">
         <div className="ambient-glow" aria-hidden="true" />
         <Container>
-          <div className="flex max-w-3xl flex-col gap-6">
-            <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
-              Contabilidade em {siteConfig.city}
-            </span>
-            <h1 className="text-h2 sm:text-h1 font-medium tracking-tight text-text-primary text-balance">
-              {siteConfig.tagline}
-            </h1>
-            <p className="max-w-xl text-lead text-text-muted">{siteConfig.description}</p>
-            <div className="mt-2 flex flex-wrap items-center gap-4">
-              <ClayButton href="/contato">
-                Falar com a Meridiano
-                <ArrowRightIcon className="h-4 w-4" />
-              </ClayButton>
-              <ClayButton href="/planos" variant="surface">
-                Ver planos e preços
-              </ClayButton>
+          <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-center lg:gap-12">
+            <div className="flex max-w-3xl flex-col gap-6">
+              <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
+                Contabilidade em {siteConfig.city}
+              </span>
+              <h1 className="text-h2 sm:text-h1 font-medium tracking-tight text-text-primary text-balance">
+                {siteConfig.tagline}
+              </h1>
+              <p className="max-w-xl text-lead text-text-muted">{siteConfig.description}</p>
+              <div className="mt-2 flex flex-wrap items-center gap-4">
+                <ClayButton href="/contato">
+                  Falar com a Meridiano
+                  <ArrowRightIcon className="h-4 w-4" />
+                </ClayButton>
+                <ClayButton href="/planos" variant="surface">
+                  Ver planos e preços
+                </ClayButton>
+              </div>
+              {heroStat ? (
+                <p className="text-body-sm text-text-muted">
+                  <span className="font-semibold tracking-tight text-text-primary">{heroStat.value}</span>{" "}
+                  {heroStat.label} já confiam na Meridiano.
+                </p>
+              ) : null}
             </div>
-            {heroStat ? (
-              <p className="text-body-sm text-text-muted">
-                <span className="font-semibold tracking-tight text-text-primary">{heroStat.value}</span>{" "}
-                {heroStat.label} já confiam na Meridiano.
-              </p>
-            ) : null}
+
+            <GlassCard className="hidden flex-col gap-4 p-6 lg:flex">
+              <span className="text-body-sm font-semibold uppercase tracking-wide text-text-secondary">
+                Por que a Meridiano
+              </span>
+              <ul className="flex flex-col gap-3">
+                {whyChooseUs.map((reason) => (
+                  <li key={reason} className="flex items-start gap-2 text-body-sm text-text-primary">
+                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-clay-primary" />
+                    <span>{reason}</span>
+                  </li>
+                ))}
+              </ul>
+            </GlassCard>
           </div>
         </Container>
       </Section>
@@ -93,7 +118,11 @@ export default function Home() {
       <Section>
         <Container>
           <SectionHeading eyebrow="Como funciona" title="Do primeiro contato à rotina no calendário" />
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+          <div className="relative mt-10 grid gap-8 sm:grid-cols-3">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[16.67%] right-[16.67%] top-5 hidden border-t border-dashed border-clay-primary/30 sm:block"
+            />
             {howItWorks.map((step, index) => (
               <div key={step.title} className="flex flex-col gap-3">
                 <ClayTile className="h-10 w-10 text-body font-medium">{index + 1}</ClayTile>

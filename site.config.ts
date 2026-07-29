@@ -132,6 +132,12 @@ export const howItWorks: HowItWorksStep[] = [
   },
 ];
 
+export const whyChooseUs: string[] = [
+  "Sem letra miúda: você entende a guia antes de pagar",
+  "Resposta em até 1 dia útil, sempre com uma pessoa",
+  "Zero multa por atraso na carteira em 2025",
+];
+
 export const proofNumbers: ProofNumber[] = [
   { value: "9", label: "anos de escritório" },
   { value: "180+", label: "empresas ativas na carteira" },
