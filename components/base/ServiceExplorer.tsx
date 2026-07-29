@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { ArrowRightIcon } from "./Icons";
 import { ClayTile, SolidCard } from "./primitives";
 
 export type ExplorerService = {
@@ -9,6 +11,8 @@ export type ExplorerService = {
   title: string;
   description: string;
   icon: ReactNode;
+  /** Deep link to this service's full write-up, e.g. "/servicos#slug". */
+  href?: string;
 };
 
 type ServiceExplorerProps = {
@@ -66,6 +70,15 @@ export function ServiceExplorer({ services }: ServiceExplorerProps) {
         <div className="flex flex-col gap-2">
           <h3 className="text-lead font-medium text-text-primary">{active.title}</h3>
           <p className="text-body text-text-muted">{active.description}</p>
+          {active.href ? (
+            <Link
+              href={active.href}
+              className="mt-1 inline-flex w-fit items-center gap-1 text-body-sm font-medium text-text-secondary hover:text-text-primary"
+            >
+              Ver detalhes completos
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          ) : null}
         </div>
       </SolidCard>
     </div>

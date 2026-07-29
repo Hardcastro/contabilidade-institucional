@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/base/Breadcrumbs";
 import { ContactForm } from "@/components/base/ContactForm";
 import { Container, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
 import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from "@/components/base/Icons";
@@ -14,6 +15,7 @@ export default function ContatoPage() {
   return (
     <Section className="pt-14 sm:pt-20">
       <Container>
+        <Breadcrumbs items={[{ label: "Início", href: "/" }, { label: "Contato" }]} className="mb-6" />
         <SectionHeading
           eyebrow="Contato"
           title="Conte como sua empresa funciona hoje"

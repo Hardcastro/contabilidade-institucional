@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/base/Breadcrumbs";
 import { ClayButton, Container, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
 import { CheckIcon } from "@/components/base/Icons";
 import { pageMetadata } from "@/lib/seo";
@@ -14,6 +15,7 @@ export default function PlanosPage() {
     <>
       <Section className="pb-8 pt-14 sm:pt-20">
         <Container>
+          <Breadcrumbs items={[{ label: "Início", href: "/" }, { label: "Planos" }]} className="mb-6" />
           <SectionHeading
             eyebrow="Planos"
             title="Um preço fechado para cada fase da empresa"

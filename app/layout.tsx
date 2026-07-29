@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { Header } from "@/components/base/Header";
 import { Footer } from "@/components/base/Footer";
 import { UtilityBar } from "@/components/base/UtilityBar";
-import { navItems, siteConfig } from "@/site.config";
+import { navItems, services, siteConfig } from "@/site.config";
 import "./globals.css";
 
 const inter = Inter({
@@ -62,6 +62,13 @@ export default function RootLayout({
           description={siteConfig.description}
           contact={siteConfig.contact}
           navItems={navItems}
+          extraColumn={{
+            heading: "Serviços",
+            items: services.map((service) => ({
+              label: service.title,
+              href: `/servicos#${service.slug}`,
+            })),
+          }}
         />
       </body>
     </html>

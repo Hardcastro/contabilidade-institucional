@@ -1,4 +1,6 @@
-import { Container, ClayTile, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
+import { Breadcrumbs } from "@/components/base/Breadcrumbs";
+import { ClayButton, Container, ClayTile, Section, SectionHeading, SolidCard } from "@/components/base/primitives";
+import { ArrowRightIcon } from "@/components/base/Icons";
 import { pageMetadata } from "@/lib/seo";
 import { officeHistory, proofNumbers, siteConfig, team } from "@/site.config";
 
@@ -20,6 +22,10 @@ export default function EscritorioPage() {
     <>
       <Section className="pb-8 pt-14 sm:pt-20">
         <Container>
+          <Breadcrumbs
+            items={[{ label: "Início", href: "/" }, { label: "Escritório" }]}
+            className="mb-6"
+          />
           <SectionHeading eyebrow="Escritório" title="Uma equipe pequena, sem terceirizar a explicação" />
           <SolidCard className="mt-8 p-6 sm:p-8">
             <p className="text-body text-text-muted">{officeHistory}</p>
@@ -68,6 +74,18 @@ export default function EscritorioPage() {
           </div>
         </Container>
       </section>
+
+      <Section className="pb-24">
+        <Container>
+          <SolidCard className="flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <p className="text-body text-text-muted">Quer conversar com quem você acabou de conhecer?</p>
+            <ClayButton href="/contato" className="shrink-0">
+              Falar com a Meridiano
+              <ArrowRightIcon className="h-4 w-4" />
+            </ClayButton>
+          </SolidCard>
+        </Container>
+      </Section>
     </>
   );
 }

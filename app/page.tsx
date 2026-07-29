@@ -44,6 +44,7 @@ export default function Home() {
       title: service.title,
       description: service.description,
       icon: <Icon className="h-7 w-7" />,
+      href: `/servicos#${service.slug}`,
     };
   });
 
