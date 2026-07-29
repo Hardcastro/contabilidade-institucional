@@ -9,23 +9,29 @@
   Tailwind's flat color/shadow shape.
 */
 :root {
-  /* Background */
-  --bg-gradient: linear-gradient(140deg, #0f172a 0%, #134e4a 58%, #065f46 100%);
+  /*
+    Background stays near-white on purpose — the palette's graphite and
+    emerald live in the elements (clay, text, accents), not washed across
+    the whole canvas. --bg-deep/--bg-mid/--bg-emerald are kept as the
+    identity's dark swatches: still used, just for text and clay, not
+    the page backdrop.
+  */
+  --bg-gradient: linear-gradient(140deg, #ffffff 0%, #f3faf7 55%, #e9f6f0 100%);
   --bg-deep: #0f172a;
   --bg-mid: #134e4a;
   --bg-emerald: #065f46;
-  --bg-solid: #0b1620;
+  --bg-solid: #eef2f0;
 
-  /* Glass */
-  --glass-bg: rgba(255, 255, 255, 0.09);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  /* Glass — frosted white over the near-white canvas */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(15, 23, 42, 0.08);
   --glass-blur: 16px;
 
   /* Glass, near-solid — for anything carrying running text */
-  --glass-solid-bg: rgba(15, 23, 42, 0.72);
-  --glass-solid-border: rgba(255, 255, 255, 0.14);
+  --glass-solid-bg: #ffffff;
+  --glass-solid-border: rgba(15, 23, 42, 0.08);
 
-  /* Clay */
+  /* Clay — the saturated half of the palette, reserved for elements */
   --clay-primary: #10b981;
   --clay-primary-ink: #022c22;
   --clay-surface: #134e4a;
@@ -36,10 +42,10 @@
   --clay-shadow-active: inset 3px 3px 7px rgba(0, 0, 0, 0.45),
     inset -3px -3px 8px rgba(255, 255, 255, 0.1), 2px 3px 8px rgba(0, 0, 0, 0.4);
 
-  /* Text */
-  --text-primary: #ffffff;
-  --text-secondary: #a7f3d0;
-  --text-muted: #94a3b8;
+  /* Text — dark graphite and emerald on a light canvas */
+  --text-primary: #0f172a;
+  --text-secondary: #065f46;
+  --text-muted: #475569;
 
   /* Radius */
   --radius-control: 14px;
@@ -143,7 +149,7 @@ body {
   height: 42rem;
   border-radius: 9999px;
   filter: blur(90px);
-  opacity: 0.28;
+  opacity: 0.16;
 }
 
 .ambient-glow::before {
@@ -156,5 +162,5 @@ body {
   bottom: -18rem;
   left: -12rem;
   background: var(--bg-mid);
-  opacity: 0.35;
+  opacity: 0.12;
 }

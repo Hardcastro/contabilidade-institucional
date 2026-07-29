@@ -82,7 +82,7 @@ type GlassCardProps = {
 export function GlassCard({ children, className = "", as: As = "div" }: GlassCardProps) {
   return (
     <As
-      className={`rounded-panel border border-glass-border bg-glass-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-glass ${className}`}
+      className={`rounded-panel border border-glass-border bg-glass-bg shadow-[0_8px_30px_-14px_rgba(15,23,42,0.18)] backdrop-blur-glass ${className}`}
     >
       {children}
     </As>

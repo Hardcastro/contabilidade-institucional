@@ -57,7 +57,7 @@ function FieldWrapper({ field, label, error, children }: FieldWrapperProps) {
       </label>
       {children}
       {error ? (
-        <p id={errorId(field)} role="alert" className="text-body-sm text-red-300">
+        <p id={errorId(field)} role="alert" className="text-body-sm text-red-700">
           {error}
         </p>
       ) : null}
@@ -293,7 +293,7 @@ export function ContactForm({
 
       <div aria-live="polite" className="min-h-6 text-body-sm">
         {status === "success" ? <span className="text-clay-primary">{statusMessage}</span> : null}
-        {status === "error" ? <span className="text-red-300">{statusMessage}</span> : null}
+        {status === "error" ? <span className="text-red-700">{statusMessage}</span> : null}
       </div>
     </form>
   );
