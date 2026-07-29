@@ -7,6 +7,7 @@ import { businessTypeOptions, revenueRangeOptions, siteConfig } from "@/site.con
 export const metadata = pageMetadata({
   title: "Contato",
   description: `Fale com a ${siteConfig.name}: telefone, e-mail, endereço e formulário de contato.`,
+  path: "/contato",
 });
 
 export default function ContatoPage() {

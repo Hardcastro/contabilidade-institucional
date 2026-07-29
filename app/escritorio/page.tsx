@@ -5,6 +5,7 @@ import { officeHistory, proofNumbers, siteConfig, team } from "@/site.config";
 export const metadata = pageMetadata({
   title: "Escritório",
   description: `Conheça a equipe e a história da ${siteConfig.name}, escritório de contabilidade em ${siteConfig.city}.`,
+  path: "/escritorio",
 });
 
 function initials(name: string) {

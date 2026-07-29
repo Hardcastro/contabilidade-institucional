@@ -6,6 +6,7 @@ import { comparisonRows, plans, siteConfig } from "@/site.config";
 export const metadata = pageMetadata({
   title: "Planos",
   description: `Planos e preços da ${siteConfig.name}: contabilidade para MEI, ME no Simples Nacional e empresas no Lucro Presumido.`,
+  path: "/planos",
 });
 
 export default function PlanosPage() {

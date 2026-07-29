@@ -12,6 +12,7 @@ import { services, siteConfig } from "@/site.config";
 export const metadata = pageMetadata({
   title: "Serviços",
   description: `Os serviços contábeis da ${siteConfig.name}: abertura de empresa, contabilidade mensal, folha de pagamento, imposto de renda e consultoria tributária.`,
+  path: "/servicos",
 });
 
 const serviceIcons: Record<string, typeof BuildingIcon> = {
