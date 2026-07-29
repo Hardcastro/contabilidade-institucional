@@ -51,7 +51,7 @@ export const siteConfig = {
   tagline: "Você sabe quanto vai pagar de imposto antes do mês fechar.",
   description:
     "Contabilidade para pequena empresa e prestador de serviço autônomo em São Paulo. Guias, folha e declarações no prazo, com número explicado — não recitado.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://meridiano-contabilidade.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://contabilidade-institucional.vercel.app",
   locale: "pt_BR",
   contact: {
     phone: "(11) 4002-8922",

@@ -10,7 +10,7 @@ Meridiano Contabilidade is a fictional accounting firm in São Paulo. The site h
 
 ## Demo
 
-Deployed on Vercel: _add the production URL here after deploying_.
+Deployed on Vercel: [contabilidade-institucional.vercel.app](https://contabilidade-institucional.vercel.app)
 
 ## Stack
 
