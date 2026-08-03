@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { sendContactEmail } from "@/lib/mailer";
+import { MailDeliveryError, MailNotConfiguredError, sendContactEmail } from "@/lib/mailer";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { CONTACT_FIELDS, validateContactForm, type ContactFormValues } from "@/lib/validation";
+import { siteConfig } from "@/site.config";
 
 export async function POST(request: Request) {
   const ip = getClientIp(request.headers);
@@ -57,7 +58,29 @@ export async function POST(request: Request) {
     revenueRange: values.revenueRange,
     message: values.message,
   };
-  const result = await sendContactEmail(emailValues);
+  // A form that answers "enviado" without delivering is the worst possible
+  // failure here: the visitor stops waiting for a reply that will never come.
+  // Anything that goes wrong past validation is reported as a failure, with a
+  // fallback the person can act on immediately.
+  try {
+    const result = await sendContactEmail(emailValues);
+    return NextResponse.json({ ok: true, simulated: result.simulated });
+  } catch (error) {
+    if (error instanceof MailNotConfiguredError || error instanceof MailDeliveryError) {
+      return NextResponse.json(
+        {
+          error: `Não conseguimos enviar sua mensagem agora. Ligue para ${siteConfig.contact.phone} ou escreva para ${siteConfig.contact.email}.`,
+        },
+        { status: 502 },
+      );
+    }
 
-  return NextResponse.json({ ok: true, simulated: result.simulated });
+    console.error("[contato] Falha inesperada ao enviar.", error);
+    return NextResponse.json(
+      {
+        error: `Não conseguimos enviar sua mensagem agora. Ligue para ${siteConfig.contact.phone} ou escreva para ${siteConfig.contact.email}.`,
+      },
+      { status: 500 },
+    );
+  }
 }
