@@ -170,3 +170,25 @@ body {
   background: var(--bg-mid);
   opacity: 0.12;
 }
+
+/*
+  Page-transition entrance, driven by app/template.tsx (Next re-mounts the
+  template on every navigation, which restarts this animation for free — no
+  router event listener needed). The reduced-motion block above already
+  neutralizes animation-duration site-wide, so this needs no media query
+  of its own.
+*/
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: page-fade-in 0.4s ease-out both;
+}
