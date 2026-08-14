@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/base/Header";
 import { Footer } from "@/components/base/Footer";
+import { FaixaProcedencia, BlocoProcedencia } from "@/components/base/Procedencia";
 import { UtilityBar } from "@/components/base/UtilityBar";
 import { navItems, services, siteConfig } from "@/site.config";
 import "./globals.css";
@@ -34,6 +35,18 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * A procedência desta peça, num lugar só. A `capacidade` é a MESMA frase do
+ * `lib/manifesto.ts` da AEther Data — se as duas divergirem, a vitrine e a peça
+ * passam a prometer coisas diferentes, e ninguém percebe.
+ */
+const PROCEDENCIA = {
+  capacidade: "Validação nas duas pontas, anti-spam e destino real — e falha honesta quando não dá para entregar",
+  vertente: "/sites",
+  repo: "https://github.com/Hardcastro/contabilidade-institucional",
+  ficticio: "A Meridiano Contabilidade",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,6 +61,7 @@ export default function RootLayout({
         >
           Pular para o conteúdo
         </a>
+        <FaixaProcedencia {...PROCEDENCIA} />
         <UtilityBar
           phone={siteConfig.contact.phone}
           phoneHref={siteConfig.contact.phoneHref}
@@ -70,6 +84,7 @@ export default function RootLayout({
             })),
           }}
         />
+        <BlocoProcedencia {...PROCEDENCIA} />
       </body>
     </html>
   );
