@@ -54,7 +54,9 @@ export default function EscritorioPage() {
         </Container>
       </Section>
 
-      <section className="bg-clay-primary py-14 sm:py-16">
+      {/* Número em h2 no desktop: quatro números em h3 dentro de uma faixa
+          de 180px liam como legenda, não como prova. */}
+      <section className="bg-clay-primary py-12 sm:py-14">
         <Container>
           <span className="text-body-sm font-semibold uppercase tracking-wide text-clay-primary-ink">
             Números do escritório
@@ -67,7 +69,9 @@ export default function EscritorioPage() {
                   index > 0 ? "sm:border-l sm:border-clay-primary-ink/20 sm:pl-8" : ""
                 }`}
               >
-                <span className="text-h3 font-semibold tracking-tight text-clay-primary-ink">{item.value}</span>
+                <span className="text-h3 font-semibold tracking-tight text-clay-primary-ink sm:text-h2">
+                  {item.value}
+                </span>
                 <span className="text-body-sm font-medium text-clay-primary-ink">{item.label}</span>
               </div>
             ))}

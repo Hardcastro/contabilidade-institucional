@@ -47,11 +47,13 @@ type FieldWrapperProps = {
   label: string;
   error?: string;
   children: ReactNode;
+  /** Ocupa as duas colunas da grade — para o campo ímpar não ficar órfão. */
+  larga?: boolean;
 };
 
-function FieldWrapper({ field, label, error, children }: FieldWrapperProps) {
+function FieldWrapper({ field, label, error, children, larga = false }: FieldWrapperProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2 ${larga ? "sm:col-span-2" : ""}`}>
       <label htmlFor={field} className="text-body-sm font-medium text-text-secondary">
         {label}
       </label>
@@ -245,7 +247,9 @@ export function ContactForm({
           </select>
         </FieldWrapper>
 
-        <FieldWrapper field="revenueRange" label="Faturamento aproximado" error={errors.revenueRange}>
+        {/* São cinco campos numa grade de duas colunas: o quinto ficava
+            sozinho na célula da esquerda com a direita vazia. */}
+        <FieldWrapper field="revenueRange" label="Faturamento aproximado" error={errors.revenueRange} larga>
           <select
             ref={registerRef("revenueRange")}
             id="revenueRange"

@@ -31,7 +31,10 @@ export default function ContatoPage() {
             />
           </SolidCard>
 
-          <SolidCard className="flex flex-col gap-6 p-6 sm:p-8">
+          {/* self-start: sem isto o cartão de contato estica junto com o
+              formulário ao lado e sobra 400px de branco embaixo dele, porque
+              item de grade estica por padrão. */}
+          <SolidCard className="flex flex-col gap-6 p-6 sm:p-8 lg:self-start">
             <div className="flex items-start gap-3">
               <PhoneIcon className="mt-0.5 h-5 w-5 shrink-0 text-clay-primary" />
               <div>

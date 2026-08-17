@@ -59,11 +59,14 @@ export function Header({ brand, navItems }: HeaderProps) {
         <GlassCard
           as="nav"
           aria-label="Principal"
-          className={`flex items-center justify-between px-5 py-3 transition-shadow duration-300 sm:px-6 ${
+          className={`vidro-barra flex items-center justify-between px-5 py-3 transition-shadow duration-300 sm:px-6 ${
             scrolled ? "shadow-[0_12px_32px_-16px_rgba(0,0,0,0.55)]" : ""
           }`}
         >
-          <Link href="/" className="text-body font-medium tracking-tight text-text-primary">
+          <Link
+            href="/"
+            className="-my-2 inline-flex min-h-10 items-center py-2 text-body font-medium tracking-tight text-text-primary"
+          >
             {brand}
           </Link>
 
@@ -85,7 +88,14 @@ export function Header({ brand, navItems }: HeaderProps) {
                     }}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`block rounded-control px-4 py-2 text-body-sm font-medium transition-colors ${
+                    // `relative z-10` no <a>, nunca no <li>: a pílula é um
+                    // elemento posicionado (z-0) e conteúdo estático pinta
+                    // ABAIXO dele — sem isto o item ativo vira pastilha verde
+                    // vazia. E tem que ser no <a> porque a medida usa
+                    // activeEl.offsetLeft, que é relativo ao offsetParent:
+                    // posicionar o <li> tornaria o <li> o offsetParent e a
+                    // pílula iria para left:0.
+                    className={`relative z-10 block rounded-control px-4 py-2 text-body-sm font-medium transition-colors ${
                       isActive
                         ? `text-clay-primary-ink ${indicator ? "" : "bg-clay-primary"}`
                         : "text-text-secondary hover:text-text-primary"

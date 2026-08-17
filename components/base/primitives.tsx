@@ -27,9 +27,17 @@ type SectionProps = {
   as?: ElementType;
 };
 
+/**
+ * Ritmo vertical da peça. O padding é simétrico, então DUAS seções vizinhas
+ * somam o dobro entre si — e quase todo bloco desta peça já é um cartão com
+ * padding próprio de 32–40px. Com py-20 dava 160px de nada entre um cartão e
+ * o próximo, e a página lia como uma coluna de ilhas soltas. py-12/sm:py-16
+ * deixa 96px no celular e 128px no desktop entre seções, que somados ao
+ * padding dos cartões ainda é ar de sobra.
+ */
 export function Section({ children, className = "", id, as: As = "section" }: SectionProps) {
   return (
-    <As id={id} className={`py-16 sm:py-24 ${className}`}>
+    <As id={id} className={`py-12 sm:py-16 ${className}`}>
       {children}
     </As>
   );
@@ -134,19 +142,33 @@ export function SolidCard({
   );
 }
 
+type ClayButtonVariant = "primary" | "surface" | "quiet";
+
 type ClayButtonBaseProps = {
   children: ReactNode;
-  variant?: "primary" | "surface";
+  variant?: ClayButtonVariant;
   className?: string;
 };
 
-const clayVariants = {
-  primary: "bg-clay-primary text-clay-primary-ink",
-  surface: "bg-clay-surface text-clay-surface-ink",
+/**
+ * Três pesos, não dois. `primary` e `surface` são ambos preenchidos e com
+ * sombra de clay — lado a lado no herói eles pesavam igual e não dava para
+ * ver qual era a ação principal. `quiet` é a que faltava: contorno, sem
+ * preenchimento e sem sombra, para o secundário existir sem competir.
+ * `surface` continua para quando o botão precisa de peso sobre fundo claro
+ * mas não é a ação principal da tela (fim de página, dentro de cartão).
+ */
+const clayVariants: Record<ClayButtonVariant, string> = {
+  primary: "bg-clay-primary text-clay-primary-ink shadow-clay active:shadow-clay-active",
+  surface: "bg-clay-surface text-clay-surface-ink shadow-clay active:shadow-clay-active",
+  quiet:
+    "border border-glass-solid-border bg-glass-solid-bg/60 text-text-primary hover:border-clay-primary/60 hover:bg-glass-solid-bg",
 };
 
-const clayButtonClasses = (variant: "primary" | "surface", className: string) =>
-  `inline-flex items-center justify-center gap-2 rounded-control px-6 py-3 text-body font-medium shadow-clay outline-none transition-[filter,box-shadow,transform] duration-150 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:shadow-clay-active active:brightness-95 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:brightness-100 ${clayVariants[variant]} ${className}`;
+const clayButtonClasses = (variant: ClayButtonVariant, className: string) =>
+  `inline-flex items-center justify-center gap-2 rounded-control px-6 py-3 text-body font-medium outline-none transition-[filter,box-shadow,transform,background-color,border-color] duration-150 hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:brightness-100 ${
+    variant === "quiet" ? "" : "hover:brightness-110 active:brightness-95"
+  } ${clayVariants[variant]} ${className}`;
 
 type ClayButtonAsButton = ClayButtonBaseProps & ButtonHTMLAttributes<HTMLButtonElement>;
 

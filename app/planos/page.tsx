@@ -72,6 +72,13 @@ export default function PlanosPage() {
       <Section className="pb-24 pt-0">
         <Container>
           <SectionHeading eyebrow="Comparação" title="Lado a lado" className="mb-8" />
+          {/*
+            A coluna do plano destacado ganha fundo e texto cheio na tabela,
+            do mesmo jeito que o cartão dele ganha borda lá em cima — sem
+            isso a tabela desmentia a recomendação: os três planos tinham
+            exatamente o mesmo peso aqui. O rótulo da linha para de ser verde
+            (competia com o destaque) e vira texto primário.
+          */}
           <SolidCard className="overflow-x-auto p-2 sm:p-4">
             <table className="w-full min-w-[640px] border-collapse text-left text-body-sm">
               <thead>
@@ -80,20 +87,34 @@ export default function PlanosPage() {
                     &nbsp;
                   </th>
                   {plans.map((plan) => (
-                    <th key={plan.id} scope="col" className="p-4 font-medium text-text-primary">
+                    <th
+                      key={plan.id}
+                      scope="col"
+                      className={`p-4 font-medium ${
+                        plan.featured
+                          ? "rounded-t-card bg-clay-primary/10 text-text-primary"
+                          : "text-text-secondary"
+                      }`}
+                    >
                       {plan.name}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {comparisonRows.map((row) => (
+                {comparisonRows.map((row, indice) => (
                   <tr key={row.label} className="border-b border-glass-solid-border last:border-0">
-                    <th scope="row" className="p-4 font-medium text-text-secondary">
+                    <th scope="row" className="p-4 font-medium text-text-primary">
                       {row.label}
                     </th>
                     <td className="p-4 text-text-muted">{row.essencial}</td>
-                    <td className="p-4 text-text-muted">{row.crescimento}</td>
+                    <td
+                      className={`bg-clay-primary/10 p-4 font-medium text-text-primary ${
+                        indice === comparisonRows.length - 1 ? "rounded-b-card" : ""
+                      }`}
+                    >
+                      {row.crescimento}
+                    </td>
                     <td className="p-4 text-text-muted">{row.completo}</td>
                   </tr>
                 ))}

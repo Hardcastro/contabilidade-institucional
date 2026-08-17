@@ -40,10 +40,16 @@ export function Footer({ brand, description, contact, navItems, extraColumn }: F
           <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
             Navegação
           </span>
-          <ul className="mt-3 flex flex-col gap-2">
+          {/* gap-2 vira zero e o alvo cresce por padding: link de nav de
+              rodapé estava com 17px de altura, menos da metade do mínimo de
+              toque. O -mx-2 devolve o alinhamento à esquerda com a coluna. */}
+          <ul className="-mx-2 mt-2 flex flex-col">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-body-sm text-text-muted hover:text-text-primary">
+                <Link
+                  href={item.href}
+                  className="inline-flex min-h-10 items-center rounded-control px-2 text-body-sm text-text-muted hover:text-text-primary"
+                >
                   {item.label}
                 </Link>
               </li>
@@ -56,10 +62,13 @@ export function Footer({ brand, description, contact, navItems, extraColumn }: F
             <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
               {extraColumn.heading}
             </span>
-            <ul className="mt-3 flex flex-col gap-2">
+            <ul className="-mx-2 mt-2 flex flex-col">
               {extraColumn.items.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-body-sm text-text-muted hover:text-text-primary">
+                  <Link
+                    href={item.href}
+                    className="inline-flex min-h-10 items-center rounded-control px-2 text-body-sm text-text-muted hover:text-text-primary"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -72,16 +81,20 @@ export function Footer({ brand, description, contact, navItems, extraColumn }: F
           <span className="text-body-sm font-medium uppercase tracking-wide text-text-secondary">
             Contato
           </span>
+          {/* `-my-2.5 py-2.5` cresce o alvo de toque de 21 para 41px sem
+              mexer no layout: a margem negativa devolve exatamente o que o
+              padding tomou, então o ícone continua alinhado com a primeira
+              linha e a lista mantém o mesmo ritmo. */}
           <ul className="mt-3 flex flex-col gap-2 text-body-sm text-text-muted">
             <li className="flex items-start gap-2">
               <PhoneIcon className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`tel:${contact.phoneHref}`} className="hover:text-text-primary">
+              <a href={`tel:${contact.phoneHref}`} className="-my-2.5 py-2.5 hover:text-text-primary">
                 {contact.phone}
               </a>
             </li>
             <li className="flex items-start gap-2">
               <MailIcon className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`mailto:${contact.email}`} className="hover:text-text-primary">
+              <a href={`mailto:${contact.email}`} className="-my-2.5 py-2.5 hover:text-text-primary">
                 {contact.email}
               </a>
             </li>
